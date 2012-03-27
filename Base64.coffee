@@ -8,18 +8,18 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
 
   # Character map
   charMap = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-  fromCharCode = String.fromCharCode
+
+  # Encode
   encode = @btoa || (input) ->
 
-    input = _utf8_encode input
     output = ""
     i = 0
 
     while i < input.length
 
-      chr1 = input.charCodeAt(i++)
-      chr2 = input.charCodeAt(i++)
-      chr3 = input.charCodeAt(i++)
+      chr1 = input.charCodeAt i++
+      chr2 = input.charCodeAt i++
+      chr3 = input.charCodeAt i++
 
       enc1 = chr1 >> 2
       enc2 = ((chr1 & 3) << 4) | (chr2 >> 4)
@@ -34,8 +34,10 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
 
     output
 
+  # Decode
   decode = @atob || (input) ->
 
+    # remove invalid chars
     input = input.replace /[^A-Za-z0-9\+\/\=]/g, ""
     i = 0
     output = ""
@@ -51,64 +53,25 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
       chr2 = ((enc2 & 15) << 4) | (enc3 >> 2)
       chr3 = ((enc3 & 3) << 6) | enc4
 
-      output = output + fromCharCode chr1
+      output += String.fromCharCode chr1
 
-      if enc3 != 64 then output += fromCharCode chr2
-      if enc4 != 64 then output += fromCharCode chr3
+      if enc3 != 64 then output += String.fromCharCode chr2
+      if enc4 != 64 then output += String.fromCharCode chr3
 
-    _utf8_decode output;
+    output
 
-  _utf8_encode = (string) ->
+  ###*
+  * Encodes the specified input to Base64.
+  * @param input {String}
+  * @return {String} result
+  ###
+  encode: (input) -> encode unescape( encodeURIComponent input )
 
-    out = ""
+  ###*
+  * Decodes the specified input from Base64.
+  * @param input {String}
+  * @return {String} result
+  ###
+  decode: (input) -> decodeURIComponent escape( decode input )
 
-    # normalize new lines
-    string = string.replace /\r\n/g, "\n"
-
-    for i,index in string
-
-      code = string.charCodeAt index
-
-      if code < 128
-        out += fromCharCode code
-
-      else if code > 127 and code < 2048
-        out += fromCharCode (code >> 6) | 192
-        out += fromCharCode (code & 63) | 128
-
-      else
-        out += fromCharCode (code >> 12) | 224
-        out += fromCharCode ((code >> 6) & 63) | 128
-        out += fromCharCode (code & 63) | 128
-
-    out
-
-  _utf8_decode = (string) ->
-
-    out = ""
-    i = 0
-    code1 = code2 = code3 = 0
-
-    until i == string.length
-
-      code1 = string.charCodeAt i
-
-      if code1 < 128
-        out += fromCharCode code1
-        i++
-
-      else if code1 > 191 && code1 < 224
-        code2 = fromCharCode code1 + 1
-        out += fromCharCode ((code1 & 31) << 6) | (code2 & 63)
-        i += 2
-
-      else
-        code2 = string.charCodeAt i + 1
-        code3 = string.charCodeAt i + 2
-        out += fromCharCode ((code1 & 15) << 12) | ((code2 & 63) << 6) | (code3 & 63)
-        i += 3
-
-    out
-  encode: (input) -> encode input
-  decode: (input) -> decode input
 )()
