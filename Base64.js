@@ -1,5 +1,5 @@
 
-/*
+/*!
 Base64 encode / decode
 Author: Carl Calderon (carl.calderon[at]gmail[dot]com)
 Inspired by http://www.webtoolkit.info/javascript-base64.html
@@ -57,7 +57,7 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
     return {
       /**
       * Encodes the specified input to Base64.
-      * @param input {String}
+      * @param {String} input
       * @return {String} result
       */
       encode: function(input) {
@@ -65,7 +65,7 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
       },
       /**
       * Decodes the specified input from Base64.
-      * @param input {String}
+      * @param {String} input
       * @return {String} result
       */
       decode: function(input) {

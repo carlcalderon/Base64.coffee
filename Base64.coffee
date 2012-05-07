@@ -1,4 +1,4 @@
-###
+###!
 Base64 encode / decode
 Author: Carl Calderon (carl.calderon[at]gmail[dot]com)
 Inspired by http://www.webtoolkit.info/javascript-base64.html
@@ -13,7 +13,7 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
   encode = @btoa || (input) ->
 
     output = ""
-    i = 0
+    i      = 0
 
     while i < input.length
 
@@ -38,8 +38,8 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
   decode = @atob || (input) ->
 
     # remove invalid chars
-    input = input.replace /[^A-Za-z0-9\+\/\=]/g, ""
-    i = 0
+    input  = input.replace /[^A-Za-z0-9\+\/\=]/g, ""
+    i      = 0
     output = ""
 
     while i < input.length
@@ -62,14 +62,14 @@ Inspired by http://www.webtoolkit.info/javascript-base64.html
 
   ###*
   * Encodes the specified input to Base64.
-  * @param input {String}
+  * @param {String} input
   * @return {String} result
   ###
   encode: (input) -> encode unescape( encodeURIComponent input )
 
   ###*
   * Decodes the specified input from Base64.
-  * @param input {String}
+  * @param {String} input
   * @return {String} result
   ###
   decode: (input) -> decodeURIComponent escape( decode input )
